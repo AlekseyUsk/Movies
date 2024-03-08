@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         installingTheReceivedDataOnTheScreen();
         viewModel.loadMovies();
+        startOfANewCardDownloadWhenScrolling();
     }
 
     private void installingTheReceivedDataOnTheScreen() {
@@ -40,6 +41,15 @@ public class MainActivity extends AppCompatActivity {
         recyclerViewMovies = findViewById(R.id.recyclerViewMovies);
         adapterMovies = new Adapter();
         recyclerViewMovies.setAdapter(adapterMovies);
-        recyclerViewMovies.setLayoutManager(new GridLayoutManager(this,2));
+        recyclerViewMovies.setLayoutManager(new GridLayoutManager(this, 2));
+    }
+
+    private void startOfANewCardDownloadWhenScrolling() {
+        adapterMovies.setOnReachEndListener(new Adapter.OnReachEndListener() {
+            @Override
+            public void onReachEnd() {
+                viewModel.loadMovies();
+            }
+        });
     }
 }

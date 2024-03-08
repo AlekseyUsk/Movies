@@ -48,8 +48,14 @@ public class MainViewModel extends AndroidViewModel {
                 .subscribe(new Consumer<MovieResponse>() {
                     @Override
                     public void accept(MovieResponse movieResponse) throws Throwable {
-                        page++; //динамически взапросе меняется страница после каждог обновления
-                        movies.setValue(movieResponse.getMovies());
+                        List<Movie> loadedMovies = movies.getValue();
+                        if (loadedMovies != null) {
+                            loadedMovies.addAll(movieResponse.getMovies());
+                            movies.setValue(loadedMovies);
+                        } else {
+                            movies.setValue(movieResponse.getMovies());
+                        }
+                        page++;
                     }
                 }, new Consumer<Throwable>() {
                     @Override

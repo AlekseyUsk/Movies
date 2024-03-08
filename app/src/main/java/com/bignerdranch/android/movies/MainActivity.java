@@ -1,5 +1,6 @@
 package com.bignerdranch.android.movies;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         installingTheReceivedDataOnTheScreen();
         startOfANewCardDownloadWhenScrolling();
         displayingTheProgressBarWhenLoadingData();
+        onClickItemToAdapter();
     }
 
     private void installingTheReceivedDataOnTheScreen() {
@@ -72,5 +74,15 @@ public class MainActivity extends AppCompatActivity {
     private void initViews() {
         recyclerViewMovies = findViewById(R.id.recyclerViewMovies);
         progressBarLoading = findViewById(R.id.progressBarLoading);
+    }
+
+    private void onClickItemToAdapter() {
+        adapterMovies.setOnItemClickListener(new Adapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Movie movie) {
+                Intent intent = MovieDetailActivity.newIntent(MainActivity.this, movie);
+                startActivity(intent);
+            }
+        });
     }
 }

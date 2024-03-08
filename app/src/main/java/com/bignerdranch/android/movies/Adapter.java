@@ -41,7 +41,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MovieViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
-
         Movie movie = movies.get(position);
         Glide.with(holder.itemView)
                 .load(movie.getPoster().getUrl())
@@ -59,7 +58,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MovieViewHolder> {
         holder.textViewRating.setBackground(background);
         holder.textViewRating.setText(String.valueOf(rating));
 
-        if (position == movies.size() - 1 && onReachEndListener != null) {
+        if (position >= movies.size() - 10 && onReachEndListener != null) {
             onReachEndListener.onReachEnd();
         }
     }

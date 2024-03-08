@@ -1,18 +1,19 @@
 package com.bignerdranch.android.movies;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
-
+    private RecyclerView recyclerViewMovies;
+    private Adapter adapterMovies;
     private MainViewModel viewModel;
 
     @Override
@@ -20,14 +21,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initRecyclerViews();
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        installingTheReceivedDataOnTheScreen();
+        viewModel.loadMovies();
+    }
+
+    private void installingTheReceivedDataOnTheScreen() {
         viewModel.getMovies().observe(this, new Observer<List<Movie>>() {
             @Override
             public void onChanged(List<Movie> movies) {
-                Log.d(TAG, movies.toString());
-                //установим полученные данные фильмов на экран
+                adapterMovies.setMovies(movies);
             }
         });
-        viewModel.loadMovies();
+    }
+
+    private void initRecyclerViews() {
+        recyclerViewMovies = findViewById(R.id.recyclerViewMovies);
+        adapterMovies = new Adapter();
+        recyclerViewMovies.setAdapter(adapterMovies);
+        recyclerViewMovies.setLayoutManager(new GridLayoutManager(this,2));
     }
 }

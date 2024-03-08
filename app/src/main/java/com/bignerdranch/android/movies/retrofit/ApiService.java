@@ -13,7 +13,7 @@ public interface ApiService {
      *таких параметров можно передавать сколько захочешь*/
 
     static final String REQUEST_URL = "movie?token=CGMVVX1-A8EM5GG-H0X78PE-5W5MYDR&field=rating." +
-            "kp&search=7-10&sortField=votes.kpsortType=-1&limit=40";
+            "kp&search=4-10&sortField=votes.kpsortType=-1&limit=40";
 
     @GET(REQUEST_URL)
     Single<MovieResponse> loadMovies(@Query("page") int page);
